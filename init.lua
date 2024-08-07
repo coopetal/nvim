@@ -147,8 +147,24 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-repeat',
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-  'tpope/vim-surround',
-
+  {
+    'tpope/vim-surround',
+    keys = {
+      { 'cs', '<Plug>Csurround', desc = 'change surrounding #1 by #2' },
+      { 'ds', '<Plug>Dsurround', desc = 'delete surrounding #1' },
+      { 'cS', '<Plug>CSurround', desc = 'change surrounding #1 by #2 + new line' },
+      { 'ys', '<Plug>Ysurround', desc = 'wraps #1 in #2 (surround)' },
+      { 'yS', '<Plug>YSurround', desc = 'wraps #1 in #2 (surround) + new line' },
+      { 'yss', '<Plug>Yssurround', desc = 'wraps line in #1 (surround)' },
+      { 'ySs', '<Plug>YSsurround', desc = 'wraps line in #1 (surround) + new line' },
+      { 'ySS', '<Plug>YSsurround', desc = 'wraps line in #1 (surround) + new line' },
+      { 'gy', '<Plug>VSurround', desc = 'wraps visual selection in #1 (surround)', mode = 'x' },
+      { 'gY', '<Plug>VgSurround', desc = 'wraps visual selection in #1 (surround) + new line', mode = 'x' },
+    },
+    init = function()
+      vim.g.surround_no_mappings = 1
+    end,
+  },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -802,9 +818,9 @@ require('lazy').setup({
       vim.keymap.set('n', '<leader>cm', require('treesj').toggle, { desc = 'Toggle tree splitting' })
       vim.keymap.set('n', '<leader>cM', function()
         require('treesj').toggle { split = { recursive = true } }
-      end, { desc = 'Toggle tree splitting' })
-      vim.keymap.set('n', '<leader>cs', require('treesj').split, { desc = 'Toggle tree splitting' })
-      vim.keymap.set('n', '<leader>cj', require('treesj').join, { desc = 'Toggle tree splitting' })
+      end, { desc = 'Toggle tree splitting recursive' })
+      vim.keymap.set('n', '<leader>cs', require('treesj').split, { desc = 'Split tree' })
+      vim.keymap.set('n', '<leader>cj', require('treesj').join, { desc = 'Join tree' })
     end,
   },
 
