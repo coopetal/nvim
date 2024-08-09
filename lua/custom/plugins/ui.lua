@@ -3,6 +3,21 @@ return {
   -- TODO: Move other UI related plugins from init.lua to here
   -- TODO: Add plugins: folke/edgy.nvim, nvim-lualine/lualine.nvim, willothy/nvim-cokeline
   {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    opts = {
+      -- Uncomment specific sections to override defaults
+      sections = {
+        -- lualine_a = { 'mode' },
+        -- lualine_b = { 'branch', 'diff', 'diagnostics' },
+        -- lualine_c = { 'filename' },
+        -- lualine_x = { 'encoding', 'fileformat', 'filetype' },
+        lualine_y = { 'location', 'progress' },
+        lualine_z = { 'hostname' },
+      },
+    },
+  },
+  {
     'nvim-neo-tree/neo-tree.nvim',
     dependencies = {
       --     {
