@@ -106,6 +106,10 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+-- Move lines up and down
+vim.keymap.set('n', '<M-k>', 'ddkP')
+vim.keymap.set('n', '<M-j>', 'ddp')
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -739,7 +743,12 @@ require('lazy').setup({
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = true } },
+  {
+    'folke/todo-comments.nvim',
+    event = 'VimEnter',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = { signs = true },
+  },
 
   { -- Collection of various small independent plugins/modules
     'echasnovski/mini.nvim',
@@ -782,7 +791,20 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'rust', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'rust',
+        'vim',
+        'vimdoc',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -834,39 +856,40 @@ require('lazy').setup({
   {
     'akinsho/toggleterm.nvim',
     version = '*',
+    keys = {
+      { '<M-1>', '<cmd>ToggleTerm size=20 direction=horizontal<CR>', mode = { 'n', 't' } },
+      { '<M-2>', '<cmd>ToggleTerm size=60 direction=vertical<CR>', mode = { 'n', 't' } },
+      { '<M-3>', '<cmd>ToggleTerm direction=float<CR>', mode = { 'n', 't' } },
+      { '<esc>', [[<C-\><C-n>]], mode = 't', buffer = 0 },
+      { '<C-h>', [[<Cmd>wincmd h<CR>]], mode = 't', buffer = 0 },
+      { '<C-j>', [[<Cmd>wincmd j<CR>]], mode = 't', buffer = 0 },
+      { '<C-k>', [[<Cmd>wincmd k<CR>]], mode = 't', buffer = 0 },
+      { '<C-l>', [[<Cmd>wincmd l<CR>]], mode = 't', buffer = 0 },
+      { '<C-w>', [[<C-\><C-n><C-w>]], mode = 't', buffer = 0 },
+    },
     opts = {
       open_mapping = '<C-\\>',
       dir = 'git_dir',
       direction = 'float',
       shade_terminals = true,
-      vim.keymap.set({ 'n', 't' }, '<M-1>', '<cmd>ToggleTerm size=20 direction=horizontal<CR>'),
-      vim.keymap.set({ 'n', 't' }, '<M-2>', '<cmd>ToggleTerm size=60 direction=vertical<CR>'),
-      vim.keymap.set({ 'n', 't' }, '<M-3>', '<cmd>ToggleTerm direction=float<CR>'),
-      vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], { buffer = 0 }),
-      vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], { buffer = 0 }),
-      vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], { buffer = 0 }),
-      vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], { buffer = 0 }),
-      vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], { buffer = 0 }),
-      vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], { buffer = 0 }),
     },
   },
 
-  --  Here are some example plugins that I've included in the Kickstart repository.
-  --  Uncomment any of the lines below to enable them (you will need to restart nvim).
+  -- Builtin kickstart plugins
   --
   -- require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
-  -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+  require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
-  -- { import = 'custom.plugins' },
+  { import = 'custom.plugins' },
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
