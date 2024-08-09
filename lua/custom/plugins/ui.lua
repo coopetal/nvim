@@ -1,7 +1,7 @@
 return {
   -- UI related plugins
   -- TODO: Move other UI related plugins from init.lua to here
-  -- TODO: Add plugins: folke/edgy.nvim, nvim-lualine/lualine.nvim, willothy/nvim-cokeline
+  -- TODO: Add plugins: folke/edgy.nvim, mbbill/undotree
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -16,6 +16,14 @@ return {
         lualine_z = { 'hostname' },
       },
     },
+  },
+  {
+    'willothy/nvim-cokeline',
+    dependencies = {
+      'nvim-lua/plenary.nvim', -- Required for v0.4.0+
+      'nvim-tree/nvim-web-devicons', -- If you want devicons
+    },
+    opts = {},
   },
   {
     'nvim-neo-tree/neo-tree.nvim',

@@ -110,6 +110,15 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<M-k>', 'ddkP')
 vim.keymap.set('n', '<M-j>', 'ddp')
 
+vim.keymap.set('n', '<leader>bl', '<cmd>buffers<CR>', { desc = 'List buffers' })
+vim.keymap.set('n', '<leader>bn', '<cmd>bnext<CR>', { desc = 'Next buffer' })
+vim.keymap.set('n', '<leader>bp', '<cmd>bprevious<CR>', { desc = 'Previous buffer' })
+vim.keymap.set('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = 'Delete current buffer' })
+vim.keymap.set('n', '<leader>b1', '<cmd>buffer1<CR>', { desc = 'Go to buffer #1' })
+vim.keymap.set('n', '<leader>b2', '<cmd>buffer2<CR>', { desc = 'Go to buffer #2' })
+vim.keymap.set('n', '<leader>b3', '<cmd>buffer3<CR>', { desc = 'Go to buffer #3' })
+vim.keymap.set('n', '<leader>b4', '<cmd>buffer4<CR>', { desc = 'Go to buffer #4' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -217,6 +226,7 @@ require('lazy').setup({
 
       -- Document existing key chains
       require('which-key').add {
+        { '<leader>b', group = '[B]uffers' },
         { '<leader>c', group = '[C]ode' },
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
