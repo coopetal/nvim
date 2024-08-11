@@ -112,12 +112,19 @@ vim.keymap.set('n', '<M-j>', 'ddp')
 
 vim.keymap.set('n', '<leader>bl', '<cmd>buffers<CR>', { desc = 'List buffers' })
 vim.keymap.set('n', '<leader>bn', '<cmd>bnext<CR>', { desc = 'Next buffer' })
-vim.keymap.set('n', '<leader>bp', '<cmd>bprevious<CR>', { desc = 'Previous buffer' })
+vim.keymap.set('n', '<leader>bb', '<cmd>bprevious<CR>', { desc = 'Previous buffer' })
 vim.keymap.set('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = 'Delete current buffer' })
 vim.keymap.set('n', '<leader>b1', '<cmd>buffer1<CR>', { desc = 'Go to buffer #1' })
 vim.keymap.set('n', '<leader>b2', '<cmd>buffer2<CR>', { desc = 'Go to buffer #2' })
 vim.keymap.set('n', '<leader>b3', '<cmd>buffer3<CR>', { desc = 'Go to buffer #3' })
 vim.keymap.set('n', '<leader>b4', '<cmd>buffer4<CR>', { desc = 'Go to buffer #4' })
+
+vim.keymap.set('n', '<leader><tab>t', '<cmd>tabe<CR>', { desc = 'Open new tab' })
+vim.keymap.set('n', '<leader><tab>n', '<cmd>tabn<CR>', { desc = 'Go to next tab' })
+vim.keymap.set('n', '<leader><tab>p', '<cmd>tabp<CR>', { desc = 'Go to previous tab' })
+vim.keymap.set('n', '<leader><tab>l', '<cmd>tabl<CR>', { desc = 'List all tabs' })
+vim.keymap.set('n', '<leader><tab>c', '<cmd>tabc<CR>', { desc = 'Close tab' })
+vim.keymap.set('n', '<leader><tab>o', '<cmd>tabo<CR>', { desc = 'Close all other tabs' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -160,6 +167,7 @@ require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-repeat',
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-unimpaired',
   {
     'tpope/vim-surround',
     keys = {
@@ -178,28 +186,26 @@ require('lazy').setup({
       vim.g.surround_no_mappings = 1
     end,
   },
-  -- NOTE: Plugins can also be added by using a table,
-  -- with the first argument being the link and the following
-  -- keys can be used to configure plugin behavior/loading/etc.
-  --
-  -- Use `opts = {}` to force a plugin to be loaded.
-  --
-
-  -- Here is a more advanced example where we pass configuration
-  -- options to `gitsigns.nvim`. This is equivalent to the following Lua:
-  --    require('gitsigns').setup({ ... })
-  --
   -- See `:help gitsigns` to understand what the configuration keys do
   { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
+        add = { text = '' },
+        change = { text = '󰧚' },
+        delete = { text = '' },
+        topdelete = { text = '' },
+        changedelete = { text = '' },
       },
+      signs_staged = {
+        add = { text = '' },
+        change = { text = '󰧚' },
+        delete = { text = '' },
+        topdelete = { text = '' },
+        changedelete = { text = '' },
+        untracked = { text = '' },
+      },
+      signs_staged_enable = true,
     },
   },
 
@@ -226,24 +232,18 @@ require('lazy').setup({
 
       -- Document existing key chains
       require('which-key').add {
-        { '<leader>b', group = '[B]uffers' },
-        { '<leader>c', group = '[C]ode' },
-        { '<leader>d', group = '[D]ocument' },
-        { '<leader>r', group = '[R]ename' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+        { '<leader>b', group = 'Buffers' },
+        { '<leader>c', group = 'Code' },
+        { '<leader>d', group = 'Document' },
+        { '<leader>r', group = 'Rename' },
+        { '<leader>s', group = 'Search' },
+        { '<leader>w', group = 'Workspace' },
+        { '<leader>t', group = 'Toggle' },
+        { '<leader>h', group = 'Git Hunk', mode = { 'n', 'v' } },
+        { '<leader><tab>', group = 'Tabs' },
       }
     end,
   },
-
-  -- NOTE: Plugins can specify dependencies.
-  --
-  -- The dependencies are proper plugin specifications as well - anything
-  -- you do for a plugin at the top level, you can do for a dependency.
-  --
-  -- Use the `dependencies` key to specify the dependencies of a particular plugin
 
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
@@ -864,25 +864,24 @@ require('lazy').setup({
   },
 
   {
-    'akinsho/toggleterm.nvim',
-    version = '*',
+    'leath-dub/snipe.nvim',
     keys = {
-      { '<M-1>', '<cmd>ToggleTerm size=20 direction=horizontal<CR>', mode = { 'n', 't' } },
-      { '<M-2>', '<cmd>ToggleTerm size=60 direction=vertical<CR>', mode = { 'n', 't' } },
-      { '<M-3>', '<cmd>ToggleTerm direction=float<CR>', mode = { 'n', 't' } },
-      { '<esc>', [[<C-\><C-n>]], mode = 't', buffer = 0 },
-      { '<C-h>', [[<Cmd>wincmd h<CR>]], mode = 't', buffer = 0 },
-      { '<C-j>', [[<Cmd>wincmd j<CR>]], mode = 't', buffer = 0 },
-      { '<C-k>', [[<Cmd>wincmd k<CR>]], mode = 't', buffer = 0 },
-      { '<C-l>', [[<Cmd>wincmd l<CR>]], mode = 't', buffer = 0 },
-      { '<C-w>', [[<C-\><C-n><C-w>]], mode = 't', buffer = 0 },
+      {
+        'gb',
+        function()
+          require('snipe').open_buffer_menu()
+        end,
+        desc = 'Open Snipe buffer menu',
+      },
+      {
+        '<leader>bs',
+        function()
+          require('snipe').open_buffer_menu()
+        end,
+        desc = 'Open Snipe buffer menu',
+      },
     },
-    opts = {
-      open_mapping = '<C-\\>',
-      dir = 'git_dir',
-      direction = 'float',
-      shade_terminals = true,
-    },
+    opts = {},
   },
 
   -- Builtin kickstart plugins

@@ -15,15 +15,15 @@ return {
         lualine_y = { 'location', 'progress' },
         lualine_z = { 'hostname' },
       },
+      tabline = {
+        lualine_a = {},
+        lualine_b = { 'tabs' },
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
+      },
     },
-  },
-  {
-    'willothy/nvim-cokeline',
-    dependencies = {
-      'nvim-lua/plenary.nvim', -- Required for v0.4.0+
-      'nvim-tree/nvim-web-devicons', -- If you want devicons
-    },
-    opts = {},
   },
   {
     'nvim-neo-tree/neo-tree.nvim',
@@ -38,7 +38,7 @@ return {
     },
     init = function()
       require('which-key').add {
-        { '<leader>e', group = 'N[e]otree' },
+        { '<leader>e', group = 'Neotree' },
       }
     end,
     keys = {
@@ -84,6 +84,27 @@ return {
           },
         },
       },
+    },
+  },
+  {
+    'akinsho/toggleterm.nvim',
+    version = '*',
+    keys = {
+      { '<M-1>', '<cmd>ToggleTerm size=20 direction=horizontal<CR>', mode = { 'n', 't' } },
+      { '<M-2>', '<cmd>ToggleTerm size=60 direction=vertical<CR>', mode = { 'n', 't' } },
+      { '<M-3>', '<cmd>ToggleTerm direction=float<CR>', mode = { 'n', 't' } },
+      { '<esc>', [[<C-\><C-n>]], mode = 't', buffer = 0 },
+      { '<C-h>', [[<Cmd>wincmd h<CR>]], mode = 't', buffer = 0 },
+      { '<C-j>', [[<Cmd>wincmd j<CR>]], mode = 't', buffer = 0 },
+      { '<C-k>', [[<Cmd>wincmd k<CR>]], mode = 't', buffer = 0 },
+      { '<C-l>', [[<Cmd>wincmd l<CR>]], mode = 't', buffer = 0 },
+      { '<C-w>', [[<C-\><C-n><C-w>]], mode = 't', buffer = 0 },
+    },
+    opts = {
+      open_mapping = '<C-\\>',
+      dir = 'git_dir',
+      direction = 'float',
+      shade_terminals = true,
     },
   },
 }
